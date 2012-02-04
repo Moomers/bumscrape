@@ -5,6 +5,8 @@ import re
 from scrapy.spider import BaseSpider
 from scrapy.selector import HtmlXPathSelector
 
+from bumscrape.items import BumscrapeItem
+
 def get_search_url(subdomain, query):
     return ("http://%s.craigslist.org/search?" +
             "areaID=1&subAreaID=&query=%s&catAbb=sss") % (
@@ -70,4 +72,4 @@ class CraigslistSpider(BaseSpider):
                 continue
 
             # if we got here, this is probably a scalper.
-            print title, url, price
+            yield BumscrapeItem(url=url, title=title, price=price)
