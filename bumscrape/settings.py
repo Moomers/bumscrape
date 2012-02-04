@@ -13,3 +13,7 @@ SPIDER_MODULES = ['bumscrape.spiders']
 NEWSPIDER_MODULE = 'bumscrape.spiders'
 USER_AGENT = '%s/%s' % (BOT_NAME, BOT_VERSION)
 
+ITEM_PIPELINES = [
+        'bumscrape.pipelines.ValidateListing',
+        'bumscrape.pipelines.StoreListing',
+]
