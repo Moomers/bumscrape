@@ -61,7 +61,7 @@ class CraigslistSpider(BaseSpider):
 
             #esclude based on stuff in the title
             for w_title in self.wanted_titles:
-                if w_title in title:
+                if w_title in title.lower():
                     continue
 
             # if we got here, this is probably a scalper.
