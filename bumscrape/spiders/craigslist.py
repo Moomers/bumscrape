@@ -10,14 +10,13 @@ def get_search_url(subdomain, query):
             "areaID=1&subAreaID=&query=%s&catAbb=sss") % (
                     subdomain, query.replace(" ", "+"))
 
+subdomains_file = "bumscrape/spiders/data/craigslist_test_subdomains"
+
 class CraigslistSpider(BaseSpider):
     """Crawls craigslist to find scalped burning man tickets."""
     name = "craigslist"
     allowed_domains = "craigslist.org"
-    subdomains = [
-        "sfbay",
-        "portland",
-    ]
+    subdomains = [line.strip() for line in file(subdomains_file).readlines()]
     queries = [
         "burning man tickets",
     ]
