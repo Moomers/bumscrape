@@ -13,7 +13,7 @@ def get_query_url(endpoint, parameters):
 class EbayScraper(BaseSpider):
     name = "ebay"
 
-    endpoint = "http://svcs.ebay.com/services/search/FindingService/v1?"
+    endpoint = "http://svcs.ebay.com/services/search/FindingService/v1"
     parameters = {
             'OPERATION-NAME':'findItemsAdvanced',
             'SERVICE-VERSION':'1.11.0',
@@ -21,6 +21,7 @@ class EbayScraper(BaseSpider):
             'RESPONSE-DATA-FORMAT':'JSON',
             'REST-PAYLOAD':'1',
             'keywords':'burning man',
+            'categoryId':1305,
             }
 
     start_urls = [get_query_url(endpoint, parameters)]
