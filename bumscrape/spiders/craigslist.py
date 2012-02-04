@@ -56,20 +56,5 @@ class CraigslistSpider(BaseSpider):
         results = hxs.select("//p[@class = 'row']")
 
         for result in results:
-            scalper = True
-
             title, url, price = self.parse_result(result)
-
-            # exclude WANTED listings
-            if (self.wanted_url_re.match(url) or
-                any(wanted_phrase in title.lower()
-                    for wanted_phrase in self.wanted_titles)): 
-                continue
-
-            # skip results that aren't about burning man.
-            if not any(bm_topic in title.lower()
-                       for bm_topic in self.topical_titles):
-                continue
-
-            # if we got here, this is probably a scalper.
-            yield BumscrapeItem(url=url, title=title, price=price)
+            yield BumscrapeItem(title=title, url=url, price=price)

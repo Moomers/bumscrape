@@ -10,7 +10,7 @@ class ValidateListing(object):
     def __init__(self):
         """defines whitelists, REs et al to validate the listing"""
         self.wanted_url_re = re.compile(r".*/wan/|.*/clt/")
-        self.wanted_titles = ['want', 'looking for', 'looking 4', 'requested', 'needed']
+        self.wanted_titles = ['want', 'looking for', 'looking 4', 'requested', 'need']
         self.topical_titles = ['bm', 'burning man']
 
     def process_item(self, item, spider):
@@ -28,11 +28,13 @@ class ValidateListing(object):
         l_title = item['title'].lower()
 
         ## exclude if the title looks like a wanted ad
-        if any(wanted_phrase in l_title for wanted_phrase in self.wanted_titles):
+        if any(wanted_phrase in l_title
+               for wanted_phrase in self.wanted_titles):
             raise DropItem("Title looks like a wanted listing: %s" % item['title'])
 
         ## skip results that aren't about burning man.
-        if not any(bm_topic in l_title for bm_topic in self.topical_titles):
+        if not any(bm_topic in l_title
+                   for bm_topic in self.topical_titles):
             raise DropItem("Title doesn't look like it's about burning man: %s" % item['title'])
 
         return item
