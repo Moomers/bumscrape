@@ -5,6 +5,8 @@ import re
 from scrapy.spider import BaseSpider
 from scrapy.selector import HtmlXPathSelector
 
+from bumscrape.items import BumscrapeItem
+
 def get_search_url(subdomain, query):
     return ("http://%s.craigslist.org/search?" +
             "areaID=1&subAreaID=&query=%s&catAbb=sss") % (
@@ -27,11 +29,11 @@ class CraigslistSpider(BaseSpider):
     # Matches a price with a dollar sign in front.
     price_re = re.compile(r"\$(\d+(?:\.\d+)?)")
 
-    # These urls are people looking for tickets
-    wanted_url_re = re.compile(r".*/wan/|.*/clt/")
+    # These urls are people looking for tickets, or 
+    wanted_url_re = re.compile(r".*/wan/|.*/clt/|.*/clo/")
 
     # these strings inside the title indicate looking for tickets
-    wanted_titles = ['want', 'looking for', 'looking 4', 'requested']
+    wanted_titles = ['want', 'looking for', 'looking 4', 'requested', 'need']
 
     # these strings in the title mean the post is about burning man
     topical_titles = ['bm', 'burning man']
@@ -70,4 +72,4 @@ class CraigslistSpider(BaseSpider):
                 continue
 
             # if we got here, this is probably a scalper.
-            print title, url, price
+            yield BumscrapeItem(url=url, title=title, price=price)
