@@ -33,6 +33,9 @@ class CraigslistSpider(BaseSpider):
     # these strings inside the title indicate looking for tickets
     wanted_titles = ['want', 'looking for', 'looking 4', 'requested']
 
+    # these strings in the title mean the post is about burning man
+    topical_titles = ['bm', 'burning man']
+
     def parse_result(self, result):
         """Parses a single result"""
         def get_string(xpath):
@@ -40,7 +43,7 @@ class CraigslistSpider(BaseSpider):
 
         url = get_string("a/@href")
         title = get_string("a/text()")
-        match_price = CraigslistSpider.price_re.search(get_string("text()"))
+        match_price = self.price_re.search(get_string("text()"))
         price = match_price.groups(1)[0] if match_price else None
 
         return title, url, price
@@ -55,19 +58,16 @@ class CraigslistSpider(BaseSpider):
 
             title, url, price = self.parse_result(result)
 
-            #*** lets exclude the WANTED listings ***
-            #exclude based on the url of the listing
-            if self.wanted_url_re.match(url):
-                scalper = False
-
-            #esclude based on stuff in the title
-            for w_title in self.wanted_titles:
-                if w_title in title.lower():
-                    scalper = False
-                    break
-
-            # if we got here, this is probably a scalper.
-            if not scalper:
+            # exclude WANTED listings
+            if (self.wanted_url_re.match(url) or
+                any(wanted_phrase in title.lower()
+                    for wanted_phrase in self.wanted_titles)): 
                 continue
 
+            # skip results that aren't about burning man.
+            if not any(bm_topic in title.lower()
+                       for bm_topic in self.topical_titles):
+                continue
+
+            # if we got here, this is probably a scalper.
             print title, url, price
