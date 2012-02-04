@@ -32,6 +32,7 @@ class CraigslistSpider(BaseSpider):
     whitelist_re = re.compile(r".*/wan/|.*/clt/")
 
     def parse_result(self, result):
+       """Parses a single result"""
         def get_string(xpath):
             return ''.join(result.select(xpath).extract()).strip()
         url = get_string("a/@href")
@@ -41,6 +42,7 @@ class CraigslistSpider(BaseSpider):
         return title, url, price
 
     def parse(self, response):
+       """Parses a list of results"""
         hxs = HtmlXPathSelector(response)
         results = hxs.select("//p[@class = 'row']")
         for result in results:
