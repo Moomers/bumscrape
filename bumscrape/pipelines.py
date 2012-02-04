@@ -13,10 +13,10 @@ class ValidateListing(object):
         self.wanted_titles = ['want', 'looking for', 'looking 4', 'requested', 'needed']
 
     def process_item(self, item, spider):
-        if spider == 'craigslist':
+        if spider.name == 'craigslist':
             return self.validate_cl_listing(item)
         else:
-            print "*** spider is %s" % spider
+            print "*** spider is %s" % spider.name
             return item
 
     def validate_cl_listings(self, item):
