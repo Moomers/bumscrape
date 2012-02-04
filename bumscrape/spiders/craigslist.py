@@ -51,17 +51,23 @@ class CraigslistSpider(BaseSpider):
         results = hxs.select("//p[@class = 'row']")
 
         for result in results:
+            scalper = True
+
             title, url, price = self.parse_result(result)
 
             #*** lets exclude the WANTED listings ***
             #exclude based on the url of the listing
             if self.wanted_url_re.match(url):
-                continue
+                scalper = False
 
             #esclude based on stuff in the title
             for w_title in self.wanted_titles:
                 if w_title in title.lower():
-                    continue
+                    scalper = False
+                    break
 
             # if we got here, this is probably a scalper.
+            if not scalper:
+                continue
+
             print title, url, price
