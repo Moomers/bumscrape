@@ -27,11 +27,11 @@ class CraigslistSpider(BaseSpider):
     # Matches a price with a dollar sign in front.
     price_re = re.compile(r"\$(\d+(?:\.\d+)?)")
 
-    # These urls are people looking for tickets
-    wanted_url_re = re.compile(r".*/wan/|.*/clt/")
+    # These urls are people looking for tickets, or 
+    wanted_url_re = re.compile(r".*/wan/|.*/clt/|.*/clo/")
 
     # these strings inside the title indicate looking for tickets
-    wanted_titles = ['want', 'looking for', 'looking 4', 'requested']
+    wanted_titles = ['want', 'looking for', 'looking 4', 'requested', 'need']
 
     # these strings in the title mean the post is about burning man
     topical_titles = ['bm', 'burning man']
