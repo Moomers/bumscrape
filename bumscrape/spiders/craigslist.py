@@ -6,9 +6,9 @@ from scrapy.spider import BaseSpider
 from scrapy.selector import HtmlXPathSelector
 
 def get_search_url(subdomain, query):
-	return ("http://%s.craigslist.org/search?" +
-			"areaID=1&subAreaID=&query=%s&catAbb=sss") % (
-					subdomain, query.replace(" ", "+"))
+    return ("http://%s.craigslist.org/search?" +
+            "areaID=1&subAreaID=&query=%s&catAbb=sss") % (
+                    subdomain, query.replace(" ", "+"))
 
 class CraigslistSpider(BaseSpider):
     """Crawls craigslist to find scalped burning man tickets."""
