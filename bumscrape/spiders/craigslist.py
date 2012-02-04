@@ -31,7 +31,7 @@ class CraigslistSpider(BaseSpider):
     wanted_url_re = re.compile(r".*/wan/|.*/clt/")
 
     # these strings inside the title indicate looking for tickets
-    wanted_titles = ['want', 'looking for', 'requested']
+    wanted_titles = ['want', 'looking for', 'looking 4', 'requested']
 
     def parse_result(self, result):
         """Parses a single result"""
