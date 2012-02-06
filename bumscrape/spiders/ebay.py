@@ -1,7 +1,7 @@
 #!/usr/bin/env python
 
+import datetime
 import json
-import re
 import urllib
 
 from scrapy.spider import BaseSpider
@@ -43,10 +43,17 @@ class EbayScraper(BaseSpider):
                 yield Request(get_query_url(self.endpoint, self.parameters), callback=self.parse)
 
         for item in data['searchResult'][0]['item']:
+            try:
+                posted = datetime.datetime.strptime(
+                        item['listingInfo'][0]['startTime'][0],
+                        "%Y-%m-%dT%H:%M:%S.%fZ")
+            except:
+                posted = None
+
             yield BumscrapeItem(url=item['viewItemURL'][0],
                                 title=item['title'][0],
                                 price=item['sellingStatus'][0]['currentPrice'][0]['__value__'],
+                                posted=posted
                                 #bids=item[0]['bidCount'],
-                                #created=item[0]['listingInfo'][0]['startTime'],
                                 #num_tickets=1, #correct number might be in an aspect...
                                 )
