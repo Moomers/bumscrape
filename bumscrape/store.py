@@ -3,7 +3,7 @@
 import MySQLdb
 
 class Store(object):
-
+    """Class which takes care of storing item listings in MySQL"""
     def __init__(self, settings):
         self.settings = settings
 
