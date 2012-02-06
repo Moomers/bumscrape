@@ -1,5 +1,6 @@
 #!/usr/bin/env python
 
+import datetime
 import json
 import re
 import urllib
@@ -24,7 +25,11 @@ class StubhubScraper(BaseSpider):
     name = "stubhub"
     endpoint = "http://publicfeed.stubhub.com/listingCatalog/select/"
     solr_query = "+stubhubDocumentType:ticket +event_id:4016620"
-    query_fields = ["stubhubDocumentId", "curr_price", "quantity"]
+    query_fields = ["stubhubDocumentId",
+                    "curr_price",
+                    "date_added",
+                    "seats",
+                    "quantity"]
     start_urls = [get_query_url(endpoint, solr_query, query_fields)]
     ticket_re = re.compile(r"^ticket-(\d+)$")
 
@@ -38,10 +43,14 @@ class StubhubScraper(BaseSpider):
                 continue
             # Get id from a ticket id string like "ticket-434128915".
             # We need this to make a url for indexing.
-            match = self.ticket_re.match(batch['stubhubDocumentId'])
+            match = self.ticket_re.match(batch["stubhubDocumentId"])
             if not match:
                 continue
             ticket_id = match.groups(1)[0]
             yield BumscrapeItem(url=get_ticket_url(ticket_id),
-                                price=batch['curr_price'],
-                                num_tickets=batch['quantity'])
+                                price=batch["curr_price"],
+                                title=batch["seats"],
+                                num_tickets=batch["quantity"],
+                                posted=datetime.datetime.strptime(
+                                    batch["date_added"],
+                                    "%Y-%m-%dT%H:%M:%SZ"))
