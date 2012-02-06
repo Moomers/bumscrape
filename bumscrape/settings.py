@@ -17,3 +17,8 @@ ITEM_PIPELINES = [
         'bumscrape.pipelines.ValidateListing',
         'bumscrape.pipelines.StoreListing',
 ]
+
+MYSQL_HOST = 'localhost'
+MYSQL_USER = 'bumscrape'
+MYSQL_PASSWD = 'bumscrape'
+MYSQL_DB = 'bumscrape'

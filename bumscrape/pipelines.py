@@ -4,7 +4,9 @@
 # See: http://doc.scrapy.org/topics/item-pipeline.html
 
 import re
+import store
 from scrapy.exceptions import DropItem
+from scrapy.conf import settings
 
 class ValidateListing(object):
     def __init__(self):
@@ -41,8 +43,15 @@ class ValidateListing(object):
 
 class StoreListing(object):
     def __init__(self):
-        pass
+        self.store = store.Store(settings)
+
+    def open_spider(self, spider):
+        self.store.connect()
+        self.store.create_db()
+
+    def close_spider(self, spider):
+        self.store.disconnect()
 
     def process_item(self, item, spider):
         """stores the listing into the db"""
-        print item
+        self.store.add_item(item)
