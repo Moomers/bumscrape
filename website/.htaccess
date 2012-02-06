@@ -1,3 +1,3 @@
 RewriteEngine on
 RewriteCond %{REQUEST_FILENAME} !-f
-RewriteRule ^(.*)$ bumscrape.py/$1 [L]
+RewriteRule ^(.*)$ /bumscrape.py/$1 [L]
