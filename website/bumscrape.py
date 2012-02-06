@@ -8,4 +8,5 @@ class hello:
     def GET(self):
        return "Hello, world."
 
-application = web.application(urls, globals()).wsgifunc()
+if __name__ == "__main__":
+    application = web.application(urls, globals()).run()
