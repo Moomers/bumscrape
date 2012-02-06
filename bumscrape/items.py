@@ -11,3 +11,4 @@ class BumscrapeItem(Item):
     title = Field()  # The html title of the page.
     num_tickets = Field()  # The number of tickets for sale.
     price = Field()  # The price of the tickets.
+    posted = Field()  # When the listing was posted.

@@ -59,7 +59,8 @@ class Store(object):
     def _add_visit(self, cursor, listing_id, item):
         cursor.execute("""
             insert into `visits` (
-                `listing_id`, `title`, `price`, `num_tickets`
-            ) values (%s, %s, %s, %s)""",
+                `listing_id`, `title`, `price`, `num_tickets`, `posted`
+            ) values (%s, %s, %s, %s, %s)""",
             (listing_id, item.get('title'),
-             item.get('price'), item.get('num_tickets')))
+             item.get('price'), item.get('num_tickets'),
+             item.get('posted')))
