@@ -48,10 +48,11 @@ class StoreListing(object):
     def open_spider(self, spider):
         self.store.connect()
         self.store.create_db()
+        self.store.log_crawl(spider.name)
 
     def close_spider(self, spider):
         self.store.disconnect()
 
     def process_item(self, item, spider):
         """stores the listing into the db"""
-        self.store.add_item(item)
+        self.store.add_item(item, spider.name)

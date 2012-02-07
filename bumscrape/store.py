@@ -23,10 +23,12 @@ class Store(object):
             create table if not exists `listings` (
                 `id` int auto_increment,
                 `url` varchar(512) not null,
+                `spider` varchar(64) not null,
                 `last_seen` timestamp default current_timestamp,
                 unique index (`url`),
                 primary key (`id`)
             ) engine=InnoDB""")
+
         cursor.execute("""
             create table if not exists `visits` (
                 `listing_id` int not null,
@@ -37,24 +39,42 @@ class Store(object):
                 `seen` timestamp default current_timestamp,
                 foreign key (`listing_id`) references `listings`(`id`)
             ) engine=InnoDB""")
+
+        cursor.execute("""
+            create table if not exists `crawls` (
+                `spider` varchar(64) not null,
+                `crawls` int not null default '0',
+                `last_crawled` timestamp not null default current_timestamp,
+                primary key ( `crawler` )
+            ) engine = InnoDB""")
+
         cursor.close()
 
-    def add_item(self, item):
+    def log_crawl(self, spider_name):
         cursor = self.conn.cursor()
-        self._insert(cursor, item)
+        cursor.execute("""
+            insert into `crawls` (`spider`, `crawls`) values (%s, 1)
+                on duplicate key update `crawls` = `crawls` + 1, last_crawled = now()""",
+            (spider_name,))
+
+    def add_item(self, item, spider_name):
+        cursor = self.conn.cursor()
+        self._insert(cursor, item, spider_name)
+
         cursor.execute("select `id` from `listings` where `url`=%s",
                        (item['url'],))
         row = cursor.fetchone()
         if row is not None:
             self._add_visit(cursor, row[0], item)
+
         cursor.close()
         self.conn.commit()
 
-    def _insert(self, cursor, item):
+    def _insert(self, cursor, item, spider_name):
         cursor.execute("""
-            insert into `listings` (`url`) values(%s)
-                on duplicate key update `last_seen` = now()""",
-            (item['url'],))
+            insert into `listings` (`url`, `spider`) values(%s, %s)
+                on duplicate key update `spider` = %s, `last_seen` = now()""",
+            (item['url'], spider_name, spider_name))
 
     def _add_visit(self, cursor, listing_id, item):
         cursor.execute("""
