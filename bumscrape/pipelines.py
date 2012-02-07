@@ -19,7 +19,6 @@ class ValidateListing(object):
         if spider.name == 'craigslist':
             return self.validate_cl_listing(item)
         else:
-            print "*** spider is %s" % spider.name
             return item
 
     def validate_cl_listing(self, item):
