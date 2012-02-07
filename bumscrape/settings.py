@@ -13,6 +13,11 @@ SPIDER_MODULES = ['bumscrape.spiders']
 NEWSPIDER_MODULE = 'bumscrape.spiders'
 USER_AGENT = '%s/%s' % (BOT_NAME, BOT_VERSION)
 
+LOG_LEVEL = 'INFO'
+
+DOWNLOAD_DELAY = 0.25
+RANDOMIZE_DOWNLOAD_DELAY = True
+
 ITEM_PIPELINES = [
         'bumscrape.pipelines.ValidateListing',
         'bumscrape.pipelines.StoreListing',
