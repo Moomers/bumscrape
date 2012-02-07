@@ -21,7 +21,7 @@ class Store(object):
         cursor = self.conn.cursor()
         cursor.execute("""
             create table if not exists `listings` (
-                `listing_id` int auto_increment,
+                `id` int auto_increment,
 
                 `url` varchar(512) not null,
                 `spider` varchar(64) not null,
@@ -32,7 +32,7 @@ class Store(object):
                 `num_tickets` int null default null,
                 `posted` timestamp null,
 
-                primary key (`listing_id`)
+                primary key (`id`)
             ) engine=InnoDB""")
 
         cursor.execute("""
