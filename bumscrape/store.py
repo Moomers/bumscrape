@@ -21,23 +21,18 @@ class Store(object):
         cursor = self.conn.cursor()
         cursor.execute("""
             create table if not exists `listings` (
-                `id` int auto_increment,
+                `listing_id` int auto_increment,
+
                 `url` varchar(512) not null,
                 `spider` varchar(64) not null,
-                `last_seen` timestamp default current_timestamp,
-                unique index (`url`),
-                primary key (`id`)
-            ) engine=InnoDB""")
+                `visited` timestamp default current_timestamp,
 
-        cursor.execute("""
-            create table if not exists `visits` (
-                `listing_id` int not null,
                 `title` varchar(255) not null,
                 `price` int null default null,
                 `num_tickets` int null default null,
                 `posted` timestamp null,
-                `seen` timestamp default current_timestamp,
-                foreign key (`listing_id`) references `listings`(`id`)
+
+                primary key (`listing_id`)
             ) engine=InnoDB""")
 
         cursor.execute("""
@@ -59,28 +54,9 @@ class Store(object):
 
     def add_item(self, item, spider_name):
         cursor = self.conn.cursor()
-        self._insert(cursor, item, spider_name)
 
-        cursor.execute("select `id` from `listings` where `url`=%s",
-                       (item['url'],))
-        row = cursor.fetchone()
-        if row is not None:
-            self._add_visit(cursor, row[0], item)
-
-        cursor.close()
-        self.conn.commit()
-
-    def _insert(self, cursor, item, spider_name):
         cursor.execute("""
-            insert into `listings` (`url`, `spider`) values(%s, %s)
-                on duplicate key update `spider` = %s, `last_seen` = now()""",
-            (item['url'], spider_name, spider_name))
-
-    def _add_visit(self, cursor, listing_id, item):
-        cursor.execute("""
-            insert into `visits` (
-                `listing_id`, `title`, `price`, `num_tickets`, `posted`
-            ) values (%s, %s, %s, %s, %s)""",
-            (listing_id, item.get('title'),
-             item.get('price'), item.get('num_tickets'),
-             item.get('posted')))
+            insert into `listings` (
+                `url`, `spider`, `title`, `price`, `num_tickets`, `posted`
+            ) values (%s, %s, %s, %s, %s, %s)""",
+            (item['url'], spider_name, item.get('title'), item.get('price'), item.get('num_tickets'), item.get('posted')),)
