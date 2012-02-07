@@ -60,3 +60,7 @@ class Store(object):
                 `url`, `spider`, `title`, `price`, `num_tickets`, `posted`
             ) values (%s, %s, %s, %s, %s, %s)""",
             (item['url'], spider_name, item.get('title'), item.get('price'), item.get('num_tickets'), item.get('posted')),)
+
+        cursor.close()
+        self.conn.commit()
+
