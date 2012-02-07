@@ -1,3 +1,13 @@
+#!/usr/bin/env python
+
+## fix the import path
+import os, sys
+abspath = os.path.dirname(__file__)
+sys.path.append(abspath)
+os.chdir(abspath)
+
+## start the application
+
 import web
 import model
 

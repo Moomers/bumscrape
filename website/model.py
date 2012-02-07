@@ -13,5 +13,5 @@ def get_listings(active_only = True):
 
     query.append("ORDER BY spider DESC, first_seen DESC")
 
-    listings = db.query(query)
+    listings = db.query(" ".join(query))
     return listings
