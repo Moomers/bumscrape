@@ -1,29 +1,40 @@
 $def with (listings)
 <!doctype html>
-<html>
+<html lang=en>
 <head>
-<title>Scalper listing</title>
+<meta charset=utf8>
+<title>Burning Man 2012 Scalpers</title>
+<style>
+td,th {
+    border: 1px solid black;
+}
+</style>
 </head>
 <body>
-<h1>Scalper listings</h1>
+
+<h1>Burning Man 2012 Scalper Listings</h1>
+
+<p>This is an automatically updated list of burning man 2012 tickets being
+scalped on the web. <a href="/about">Learn more.</a></p>
+
 <table>
-    <tr>
-        <th>Spider</th>
-        <th>First Seen</th>
-        <th>Last Seen</th>
-        <th>Title</th>
-        <th>Price</th>
-        <th>Tickets</th>
-    </tr>
-    $for listing in listings:
-    <tr>
-        <td>$listing.spider</td>
-        <td>$listing.first_seen</td>
-        <td>$listing.last_seen</td>
-        <td><a href="$listing.url">$listing.title</a></td>
-        <td>$listing.price</td>
-        <td>$listing.num_tickets</td>
-    </tr>
+<tr>
+    <th>Tickets</th>
+    <th>Price</th>
+    <th>Title</th>
+    <th>First Seen</th>
+    <th>Last Seen</th>
+    <th>Spider</th>
+</tr>
+$for listing in listings:
+<tr>
+    <td>$listing.num_tickets</td>
+    <td>$listing.price</td>
+    <td><a href="$listing.url">$listing.title</a></td>
+    <td>$listing.first_seen</td>
+    <td>$listing.last_seen</td>
+    <td>$listing.spider</td>
+</tr>
 <table>
 </body>
 </html>
