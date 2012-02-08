@@ -19,7 +19,7 @@ urls = (
 
 class about:
     def GET(self):
-        raise web.redirect('/about.html')
+        return render.about()
 
 class listings:
     def GET(self):
