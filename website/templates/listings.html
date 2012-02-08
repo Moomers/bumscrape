@@ -1,25 +1,29 @@
 $def with (listings)
-
+<!doctype html>
 <html>
-    <head>
-        <title>Scalper listing</title>
-    </head>
-    <body>
-        <h3>Scalper listings</h3>
-
-        <table>
-            <tr>
-                <th>Spider</th> <th>First Seen</th> <th>Last Seen</th> <th>Title</th> <th>Price</th> <th>Tickets</th>
-            </tr>
-            $for listing in listings:
-            <tr>
-                <td>$listing.spider</td>
-                <td>$listing.first_seen</td>
-                <td>$listing.last_seen</td>
-                <td><a href="$listing.url">$listing.title</a></td>
-                <td>$listing.price</td>
-                <td>$listing.num_tickets</td>
-            </tr>
-        <table>
-    </body>
+<head>
+<title>Scalper listing</title>
+</head>
+<body>
+<h1>Scalper listings</h1>
+<table>
+    <tr>
+        <th>Spider</th>
+        <th>First Seen</th>
+        <th>Last Seen</th>
+        <th>Title</th>
+        <th>Price</th>
+        <th>Tickets</th>
+    </tr>
+    $for listing in listings:
+    <tr>
+        <td>$listing.spider</td>
+        <td>$listing.first_seen</td>
+        <td>$listing.last_seen</td>
+        <td><a href="$listing.url">$listing.title</a></td>
+        <td>$listing.price</td>
+        <td>$listing.num_tickets</td>
+    </tr>
+<table>
+</body>
 </html>

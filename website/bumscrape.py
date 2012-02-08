@@ -13,13 +13,13 @@ import model
 
 render = web.template.render('templates/')
 urls = (
-      '/', 'index',
-      '/listings', 'listings',
+      '/', 'listings',
+      '/about', 'about',
       )
 
-class index:
+class about:
     def GET(self):
-        raise web.redirect('/index.html')
+        raise web.redirect('/about.html')
 
 class listings:
     def GET(self):
