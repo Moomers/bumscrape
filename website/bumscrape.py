@@ -11,17 +11,17 @@ os.chdir(abspath)
 import web
 import model
 
-render = web.templates.render('templates/')
+render = web.template.render('templates/')
 urls = (
       '/', 'index',
-      '/list', 'list',
+      '/listings', 'listings',
       )
 
 class index:
     def GET(self):
         raise web.redirect('/index.html')
 
-class list:
+class listings:
     def GET(self):
        """gets active listings"""
        request = web.input(list_all=False, format='web')
