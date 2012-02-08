@@ -14,7 +14,12 @@ import model
 render = web.template.render('templates/')
 urls = (
       '/', 'listings',
+      '/about', 'about'
       )
+
+class about:
+    def GET(self):
+        return render.about()
 
 class listings:
     def GET(self):
