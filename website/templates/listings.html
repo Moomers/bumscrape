@@ -7,16 +7,17 @@ $def with (listings)
 <style>
 body {
     font: 14px arial, helvetica, sans-serif
-}
+	}
 h1 {
     font-size: 150%
-}
+	}
 table {
     border-collapse: collapse;
-}
+	}
 td, th {
     border: 1px solid black;
-}
+    padding: 2, 2, 2, 2;
+    }
 </style>
 </head>
 <body>
@@ -24,25 +25,25 @@ td, th {
 <h1>Burning Man 2012 Scalper Listings</h1>
 
 <p>This is an automatically updated list of burning man 2012 tickets being
-scalped on the web. <a href="/about">Learn more.</a></p>
+resold & scalped on the web. <a href="/about">Learn more.</a></p>
 
 <table>
 <tr>
     <th>Tickets</th>
     <th>Price</th>
     <th>Title</th>
-    <th>First Seen</th>
-    <th>Last Seen</th>
-    <th>Spider</th>
+    <th>Website</th>
+    <th>Listed on</th>
+    <th>Still up as of</th>
 </tr>
 $for listing in listings:
     <tr>
         <td>$listing.num_tickets</td>
         <td>$listing.price</td>
         <td><a href="$listing.url">$listing.title</a></td>
-        <td>$listing.first_seen_fmt</td>
-        <td>$listing.last_seen_fmt</td>
         <td>$listing.spider</td>
+        <td>$listing.first_seen</td>
+        <td>$listing.last_seen</td>
     </tr>
 <table>
 </body>
