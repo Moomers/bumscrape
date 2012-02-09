@@ -1,15 +1,7 @@
 $def with (listings)
-<!doctype html>
-<html lang=en>
-<head>
-<meta charset=utf8>
-<title>BumScrape - Burning Man 2012 Ticket Scalping Tracker</title>
-<link rel=stylesheet href="bumscrape.css">
-</head>
-<body>
 
-<img src="tp.png" alt="inspirational logo" id=logo>
-<h1>BumScrape: Burning Man 2012 Scalper Listings</h1>
+$var title: 
+$var header: BumScrape: Burning Man 2012 Scalper Listings
 
 <p>This is an automatically generated list of Burning Man 2012 tickets being
 resold on the web. <a href="/about">Learn more.</a></p>
@@ -35,5 +27,3 @@ $for listing in listings:
         <td>$listing.last_seen</td>
     </tr>
 <table>
-</body>
-</html>
