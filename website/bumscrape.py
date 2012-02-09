@@ -14,7 +14,7 @@ import json
 import csv
 import StringIO
 
-render = web.template.render('templates/')
+render = web.template.render('templates/', base='layout')
 urls = (
       '/', 'listings',
       '/about', 'about',
