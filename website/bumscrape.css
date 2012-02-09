@@ -40,3 +40,10 @@ td, th {
 .price {
     text-align: right
 }
+ul.inline {
+    list-style-type: none
+}
+ul.inline li {
+    display: inline-block
+    padding-left: 10px
+}
