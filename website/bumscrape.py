@@ -40,12 +40,12 @@ class listings:
        active_only = True if not request.list_all else False
        listings = model.get_listings(active_only)
 
-       if format == 'json':
+       if request.format == 'json':
            web.header('Content-Type', 'application/json')
            return json.dumps({'listings': [
                dict((field, listing[field]) for field in self.export_fields)
                for listing in listings]})
-       elif format == 'csv':
+       elif request.format == 'csv':
            buf = StringIO.StringIO()
            out = csv.writer(buf)
            out.writerow(self.export_fields) 
