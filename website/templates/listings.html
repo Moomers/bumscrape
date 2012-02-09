@@ -19,15 +19,15 @@ resold on the web. <a href="/about">Learn more.</a></p>
 <tr>
     <th>Tickets</th>
     <th>Price</th>
-    <th>Title</th>
+    <th>Listing Title</th>
     <th>Website</th>
     <th>Listed on</th>
     <th>Still up as of</th>
 </tr>
 $for listing in listings:
     <tr>
-        <td>$listing.num_tickets</td>
-        <td>$listing.price</td>
+        <td class=count>$listing.num_tickets</td>
+        <td class=price>$listing.price</td>
         <td><a href="$listing.url">$listing.title</a></td>
         <td>$listing.spider</td>
         <td>$listing.first_seen</td>

@@ -1,5 +1,15 @@
 body {
     font: 16px arial, helvetica;
+    margin: 15px;
+}
+a {
+    color: #12c;
+}
+a:active {
+    color: #dd4b39;
+}
+a:visited {
+    color: #61c;
 }
 p {
     line-height: 1.4
@@ -13,7 +23,20 @@ h2 {
 table {
     border-collapse: collapse;
 }
+th {
+    background: #c9cf31;
+    text-align: center;
+}
+td {
+    background: #e1e0b2;
+}
 td, th {
-    border: 1px solid black;
+    border: 1px solid #333;
     padding: 2px;
+}
+.count {
+    text-align: center 
+}
+.price {
+    text-align: right
 }
