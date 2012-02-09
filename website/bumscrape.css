@@ -35,7 +35,9 @@ td, th {
     padding: 2px;
 }
 .formats {
-    font-size: 50%
+    font-size: 80%;
+    margin-bottom: 4px;
+    color: #666
 }
 .count {
     text-align: center 
