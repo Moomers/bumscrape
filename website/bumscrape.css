@@ -45,3 +45,8 @@ td, th {
 .price {
     text-align: right
 }
+#logo {
+    margin-right: 15px;
+    float: left;
+    height: 100px;
+}
