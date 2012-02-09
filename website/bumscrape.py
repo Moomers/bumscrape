@@ -25,7 +25,14 @@ class about:
         return render.about()
 
 class listings:
-    fields = ['num_tickets', 'price', 'title', ''
+    export_fields = ['num_tickets',
+                     'price',
+                     'url',
+                     'title',
+                     'spider',
+                     'first_seen',
+                     'last_seen']
+
     def GET(self):
        """gets active listings"""
        request = web.input(list_all=False, format='web')
@@ -36,15 +43,14 @@ class listings:
        if format == 'json':
            web.header('Content-Type', 'application/json')
            return json.dumps({'listings': [
-               dict((self.fields[i], listing[i])
-                    for i in xrange(len(self.fields)))
+               dict((field, listing[field]) for field in self.export_fields)
                for listing in listings]})
        elif format == 'csv':
            buf = StringIO.StringIO()
            out = csv.writer(buf)
-           out.writerow(self.fields) 
-           for row in listings:
-               out.writerow(row)
+           out.writerow(self.export_fields) 
+           for listing in listings:
+               out.writerow([listing[field] for field in self.export_fields])
            web.header('Content-Type', 'application/csv')
            return buf.getvalue()
        else:
