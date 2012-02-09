@@ -33,7 +33,7 @@ td {
 }
 td, th {
     border: 1px solid #333;
-    padding: 2px;
+    padding: 2px 8px 2px 8px;
 }
 .formats {
     font-size: 80%;

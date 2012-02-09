@@ -2,129 +2,110 @@
 <html lang=en>
 <head>
 <meta charset=utf8>
-<title>BumScrape: The Burning Man Ticket Scalping Tracker</title>
+<title>BumScrape - Burning Man 2012 Ticket Scalping Tracker - About</title>
 <link rel=stylesheet href="bumscrape.css">
 </head>
 <body>
 
 <img src="tp.png" alt="inspirational logo" id=logo>
-<h1>BumScrape: The Burning Man Ticket Scalping Tracker</h1>
+<h1>About BumScrape</h1>
 
 <h2>TL;DR</h2>
 
 <p>Scalpers could wreck burning man, we should keep an eye on this.</p>
-
 <div style="clear:both"></div>
 
-<h2>What is BumScrape</h2>
+<h2>So what is this?</h2>
 
-<p>
-BumScrape is a web-crawling scraper which collects data about Burning
-Man tickets scalped on the Internet.  BumScrape periodically visits
-popular ticket-vending websites; we currently check Craigslist, eBay
-and StubHub.  Whenever we find a BM ticket listing on one of these
-sites, we log information about the listing in a database.  We will
-keep track of how the listing progresses for as long as the listing is
-visible on the site where we found it.  The goal is to get an idea of
-the size and properties of the external resale market in BM tickets.
-</p>
+<p>BumScrape is a program that collects data about Burning Man tickets being
+resold on the web. BumScrape periodically visits popular ticket-vending
+websites; we currently check Craigslist, eBay and StubHub. Whenever we find
+a BM ticket listing on one of these sites, we log information about the
+listing in a database. We track each listing for as long as it's posted.
+The goal is to get an idea of the size and properties of the external resale
+market in BM tickets.</p>
 
 <h2>What happens to the data you gather?</h2>
 
-<p>
-We are happy to let you see our data!  Check out all of the active
-listings we're currently tracking <a href="/listings">here</a>.  You
-can get a copy of our archived data <a
-href="/listings?list_all=1&format=json">here</a>.
-</p>
+<p>All our data is public. Check out all of the active listings we're
+currently tracking <a href="/">here</a>. You can get a copy of our archived
+data <a href="/listings?list_all=1&format=json">here</a>.</p>
 
-<p>
-Please don't use this site to buy a scalped ticket!
-Paying over face-value for a ticket encourages more scalping and commoditizes our community.
-</p>
+<p>Please don't use this site to buy a scalped ticket! Paying over
+face-value for a ticket encourages more scalping and commoditizes our
+community.</p>
 
 <h2>How does it work?</h2>
+
 <p>We used the <a href="http://scrapy.org/">Scrapy</a> web-scraping
-framework for <a href="http://python.org">Python</a>.  We wrote
+framework for <a href="http://python.org">Python</a>. We wrote
 <a href="http://doc.scrapy.org/en/0.14/topics/spiders.html">spiders</a> for
 each of the sites we're interested in. Those spiders generate
 <a href="http://doc.scrapy.org/en/0.14/topics/items.html">items</a> which we
 validate and then save into a <a href="http://mysql.com">MySQL</a> database
 via an <a href="http://doc.scrapy.org/en/0.14/topics/item-pipeline.html">item pipeline</a>.
-So far, only our Craigslist crawler is a traditional web scraper -- we also
+So far, only our Craigslist crawler is a traditional web scraper&mdash;we also
 use the APIs provided by StubHub and eBay, but we wrap those API calls in
-spider semantics.
-</p>
+spider semantics.</p>
 
 <h2>How can I help?</h2>
 
-<p>
-We could probably use more spiders. If you know of a ticket-vending site
-we're not aware of, write a spider for it and send us a patch.
-</p>
+<p>We could use coding help to create more spiders. If you know of a
+ticket-vending site we're not aware of, let us know, or write a spider for
+it and send us a patch.</p>
 
 <h2>I want to gather the data myself! How do I use your software?</h2>
-<p>
-Our code is available via git; simply do a
+
+<p>The code is available via git:
 <code>git clone http://igor.moomers.org/git/bumscrape</code>.
 </p>
 
-<p>
-To crawl, you'll need to install python and scrapy.
-If you want to save the data, you'll need a MySQL db and the
+<p>To crawl, you'll need to install Python and scrapy. If you want to save
+the data, you'll need a MySQL db and the
 <a href="http://mysql-python.sourceforge.net/MySQLdb.html">mysqldb module</a>.
-If you want to use a different DB, you can replace the <code>Store</code>
-class in <code>store.py</code>.  To use the eBay API, you'll need to
+If you want to use a different database, you can replace the <code>Store</code>
+class in <code>store.py</code>. To use the eBay API, you'll need to
 <a href="https://www.x.com/developers/ebay">get an eBay developer account</a>.
 It's free, but you're limited to 5k queries per day unless you work with
-them to get your app certified.
-</p>
+them to get your app certified.</p>
 
-<p>
-This website uses <a href="http://webpy.org">web.py</a>, a lightweight
-python web framework.  We are running on Apache 2 and using
+<p>This website uses <a href="http://webpy.org">web.py</a>, a lightweight
+python web framework. We are running on Apache 2 and using
 <a href="http://code.google.com/p/modwsgi/">modwsgi</a>.
 If you want to run a similar site, you can use
-<a href="apache.config">our apache config</a> as a starting point.
-</p>
+<a href="apache.config">our apache config</a> as a starting point.</p>
 
 <h2>Why are you doing this?</h2>
 
-<p>
-Many of us at <a href="http://igor.moomers.org/bm">Camp Warp Zone</a>
-didn't win tickets in the 2012 ticket lottery.  Like many burners, we were
+<p>Many of us at <a href="http://igor.moomers.org/bm">Camp Warp Zone</a>
+didn't win tickets in the 2012 ticket lottery. Like many burners, we were
 curious why so few tickets ended up in the hands of the people we knew in
-the community.  We thought of three possible outcomes:
-</p>
+the community. We thought of three possible scenarios:</p>
 
-<ul>
+<ol>
     <li>Many burners bought too many tickets to increase their odds, and
-    were embarrased to come forward</li>
+    were embarrased to come forward.</li>
     <li>Lots of burgins not affiliated with any theme camps bought all the
-    tickets</li>
-    <li>Scalpers beat the BMOrg and were sitting on a ticket bonanza</li>
-</ul>
+    tickets.</li>
+    <li>Scalpers beat the BMOrg and are sitting on a ticket bonanza.</li>
+</ol>
 
-<p>
-We don't have enough data to speak about the first two possibilities.
-Possibly, the BMOrg does, but they're very unlikely to release the data
-given their MO.  BumScrape is an attempt to explore the third possibility.
-Scalpers cannot sell tickets in secret -- they do it out in the open, on
-the internet.  Lets keep tabs on them!
-</p>
+<p>Probably the truth is somewhere in between. We aren't sure about the
+first two scenarios, but we're especially worried about the third. BumScrape
+is an attempt to see how widespread scalping is. Scalpers cannot sell
+tickets in secret&mdash;they do it out in the open, on the web. Let's keep
+tabs on them!</p>
 
 <h2>Who are you people?</h2>
-<p>
-This project was created by
+
+<p>This project was created by
 <a href="https://plus.google.com/106232453080473820116">Jered Wierzbicki</a> and
-<a href="https://plus.google.com/111898530544158794681/posts">Igor Serebryany</a>
-We are just a couple of burners hoping to make the world a better place ...
-for burners.  Our other awesome playa projects included a pixel-for-pixel
+<a href="https://plus.google.com/111898530544158794681/posts">Igor Serebryany</a>.
+We are just a couple of burners hoping to make the world a better place...
+for burners. Our awesome playa projects included a pixel-for-pixel
 replica of the Mario castle from the original SMB (4:30 &amp; E, 2010)
 and <a href="http://www.moomers.org/~jered/pipe-dream/">Pipe Dream</a>,
-a 20'-tall climbing structure (4:00 &amp; A, 2011).  Assuming we get
-tickets, come find us on the playa at Camp Warp Zone!
-</p>
-
+a 20'-tall climbing structure (4:00 &amp; A, 2011). Assuming we get
+tickets, come find us on the playa at Camp Warp Zone!</p>
 </body>
 </html>
