@@ -3,13 +3,17 @@
 <head>
 <meta charset=utf8>
 <title>BumScrape: The Burning Man Ticket Scalping Tracker</title>
+<link rel=stylesheet href="bumscrape.css">
 </head>
 <body>
 
-<h3>TL;DR</h3>
-<p><a href="/listings">All BM tickets currently for sale online (AFAWK)</a></p>
+<h1>BumScrape: The Burning Man Ticket Scalping Tracker</h1>
 
-<h3>What is BumScrape</h3>
+<h2>TL;DR</h2>
+
+<p>Scalpers could wreck burning man, we should keep an eye on this.</p>
+
+<h2>What is BumScrape</h2>
 
 <p>
 BumScrape is a web-crawling scraper which collects data about Burning
@@ -22,7 +26,7 @@ visible on the site where we found it.  The goal is to get an idea of
 the size and properties of the external resale market in BM tickets.
 </p>
 
-<h3>What happens to the data you gather?</h3>
+<h2>What happens to the data you gather?</h2>
 
 <p>
 We are happy to let you see our data!  Check out all of the active
@@ -36,7 +40,7 @@ Please don't use this site to buy a scalped ticket!
 Paying over face-value for a ticket encourages more scalping and commoditizes our community.
 </p>
 
-<h3>How does it work?</h3>
+<h2>How does it work?</h2>
 <p>We used the <a href="http://scrapy.org/">Scrapy</a> web-scraping
 framework for <a href="http://python.org">Python</a>.  We wrote
 <a href="http://doc.scrapy.org/en/0.14/topics/spiders.html">spiders</a> for
@@ -49,14 +53,14 @@ use the APIs provided by StubHub and eBay, but we wrap those API calls in
 spider semantics.
 </p>
 
-<h3>How can I help?</h3>
+<h2>How can I help?</h2>
 
 <p>
 We could probably use more spiders. If you know of a ticket-vending site
 we're not aware of, write a spider for it and send us a patch.
 </p>
 
-<h3>I want to gather the data myself! How do I use your software?</h3>
+<h2>I want to gather the data myself! How do I use your software?</h2>
 <p>
 Our code is available via git; simply do a
 <code>git clone http://igor.moomers.org/git/bumscrape</code>.
@@ -81,7 +85,7 @@ If you want to run a similar site, you can use
 <a href="apache.config">our apache config</a> as a starting point.
 </p>
 
-<h3>Why are you doing this?</h3>
+<h2>Why are you doing this?</h2>
 
 <p>
 Many of us at <a href="http://igor.moomers.org/bm">Camp Warp Zone</a>
@@ -106,7 +110,7 @@ Scalpers cannot sell tickets in secret -- they do it out in the open, on
 the internet.  Lets keep tabs on them!
 </p>
 
-<h3>Who are you people?</h3>
+<h2>Who are you people?</h2>
 <p>
 This project was created by
 <a href="https://plus.google.com/106232453080473820116">Jered Wierzbicki</a> and
