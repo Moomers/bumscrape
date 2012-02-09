@@ -34,6 +34,9 @@ td, th {
     border: 1px solid #333;
     padding: 2px;
 }
+.formats {
+    font-size: 50%
+}
 .count {
     text-align: center 
 }
