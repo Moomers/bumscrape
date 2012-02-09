@@ -4,47 +4,63 @@ import datetime
 import re
 
 from scrapy.spider import BaseSpider
-from scrapy.selector import HtmlXPathSelector
+from scrapy.http import Request
 
 from bumscrape.items import BumscrapeItem
 
 class TicketsmoreSpider(BaseSpider):
     """Crawls results for Ticketsmore ticket-selling site"""
     name = "ticketsmore"
-    allowed_domains = "ticketsmore.com"
+    allowed_domains = ["ticketsmore.com", "tickettransaction.com"]
 
-    start_urls = ["""http://www.ticketsmore.com/ResultsTicket.php?evtid=1795197&event=Burning+Man+2012"""]
+    event_id = "1795197"
+    start_urls = ["""http://www.ticketsmore.com/ResultsTicket.php?evtid=%s&event=Burning+Man+2012""" % event_id]
 
-    def parse_result(self, result):
-        """Parses a single result"""
-        def get_string(xpath):
-            return ''.join(result.select(xpath).extract()).strip()
+    script_re = re.compile('<script.*?>(.*?)</script>', re.MULTILINE | re.DOTALL)
+    js_url_re = re.compile("""src=['"]([^'"]+)""")
+    ticket_re = re.compile("""">(.*?)<"\+""")
 
-        url = get_string("a/@href")
-        title = get_string("a/text()")
-        text = get_string("text()")
-        match_price = self.price_re.search(text)
-        price = match_price.groups(1)[0] if match_price else None
-        match_date = self.date_re.search(text)
-        posted = None
-        if match_date:
-            date_string = match_date.groups(1)[0]
-            posted = datetime.datetime.strptime(
-                "%s 2012" % date_string, "%b %d %Y")
-
-        return title, url, price, posted
+    def make_url(self, identifier):
+        return "https://secure.ticketsmore.com/checkout/Checkout.aspx?e=%s" % identifier
 
     def parse(self, response):
-        """Parses a list of results"""
-        hxs = HtmlXPathSelector(response)
-        results = hxs.select("div[@id = 'ssc_tktGroups']/div")
+        """Parses the initial page, which only contains the javascript to the real tickets
 
-        for result in results:
-            print result
-            return
+        We extract the js url and parse that separetely
+        """
+        for m in self.script_re.finditer(response.body):
+            script = m.group(1)
+            if 'tickettransaction' in script:
+                n = self.js_url_re.search(script)
+                if n:
+                    url = n.group(1).rstrip('/')
+                    if not url.endswith('&'):
+                        url += '&'
+                    url += 'evtid=%s' % self.event_id
 
-            title, url, price, posted = self.parse_result(result)
-            yield BumscrapeItem(title=title,
-                                url=url,
-                                price=price,
-                                posted=posted)
+                    print url
+                    yield Request(url, callback=self.parse_javascript)
+
+    def parse_javascript(self, response):
+        """Parses javascript from tickettransaction to find actual ticket listings"""
+        for m in self.ticket_re.finditer(response.body):
+            parts = m.group(1).split('>')
+
+            part_names = {
+                    0:'title',
+                    1:'section',
+                    2:'num_tickets',
+                    3:'price',
+                    6:'identifier'}
+
+            ticket = {}
+            for index, key in part_names.items():
+                ticket[key] = parts[index]
+            ticket['url'] = self.make_url(ticket['identifier'])
+
+            yield BumscrapeItem(
+                    url = ticket['url'],
+                    title = ticket['title'],
+                    num_tickets = ticket['num_tickets'],
+                    price = ticket['price'],
+                    )
