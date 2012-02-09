@@ -17,8 +17,14 @@ import StringIO
 render = web.template.render('templates/')
 urls = (
       '/', 'listings',
-      '/about', 'about'
+      '/about', 'about',
+      '/updates', 'updates',
+      '/news', 'updates',
       )
+
+class updates:
+    def GET(self):
+        return render.updates()
 
 class about:
     def GET(self):
