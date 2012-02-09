@@ -1,9 +1,14 @@
 body {
-    font: 16px arial, helvetica, sans-serif
-    line-spacing: 1.4;
+    font: 16px arial, helvetica;
+}
+p {
+    line-height: 1.4
 }
 h1 {
     font-size: 150%
+}
+h2 {
+    font-size: 120%
 }
 table {
     border-collapse: collapse;
