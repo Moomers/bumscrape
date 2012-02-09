@@ -43,7 +43,8 @@ class listings:
        if request.format == 'json':
            web.header('Content-Type', 'application/json')
            return json.dumps({'listings': [
-               dict((field, listing[field]) for field in self.export_fields)
+               dict((field, str(listing[field]))
+                    for field in self.export_fields)
                for listing in listings]})
        elif request.format == 'csv':
            buf = StringIO.StringIO()
@@ -52,6 +53,10 @@ class listings:
            for listing in listings:
                out.writerow([listing[field] for field in self.export_fields])
            web.header('Content-Type', 'application/csv')
+           web.header('Content-Disposition',
+                      'attachment; filename=listings.csv')
+           web.header('Pragma', 'no-cache')
+           web.header('Expires', '0')
            return buf.getvalue()
        else:
            return render.listings(listings)
